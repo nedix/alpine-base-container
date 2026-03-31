@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
 
       - id: make-alpine-tags
-        name: Get latest Alpine version
+        name: Make Alpine tags
         run: |
           ALPINE_VERSION_PATCH=$(sed -nE "s|^ARG ALPINE_VERSION=(.*)$|\1|p" Containerfile)
           ALPINE_VERSION_MINOR=$(sed -nE "s|^ARG ALPINE_VERSION=(.*)(\.\d+){1}$|\1|p" Containerfile)
