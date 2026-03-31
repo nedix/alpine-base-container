@@ -47,4 +47,4 @@ RUN NOW_SECONDS_FROM_EPOCH="$(date +%s)" \
         ; fi \
     ; done \
     && rm /usr/bin/yq \
-    && apk update
+    && rm -rf /var/cache/apk/*
