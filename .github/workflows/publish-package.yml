@@ -37,7 +37,7 @@ jobs:
         uses: nedix/actions/publish-package@main
         with:
           enable_cache: 'true'
-          enable_latest_tag: 'false'
+          enable_latest_tag: 'true'
           enable_short_sha_tag: 'false'
           enable_version_tag: 'false'
           platforms: linux/amd64,linux/arm64/v8
