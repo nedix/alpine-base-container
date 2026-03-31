@@ -43,6 +43,6 @@ jobs:
           registry_username: ${{ secrets.REGISTRY_USERNAME || github.actor }}
           registry_password: ${{ secrets.REGISTRY_PASSWORD || github.token }}
           tags: |
-            alpine${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_PATCH }}
-            alpine${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_MINOR }}
-            alpine${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_MAJOR }}
+            ${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_PATCH }}
+            ${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_MINOR }}
+            ${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_MAJOR }}
