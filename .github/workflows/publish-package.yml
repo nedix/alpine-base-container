@@ -22,10 +22,15 @@ jobs:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
 
-      - id: get-latest-alpine-version
-        name: Get latest Fedora version
+      - id: get-alpine-versions
+        name: Get Alpine versions
         run: |
-          echo "latest_alpine_version=" && sed -nE "s|^ARG ALPINE_VERSION=(.*)$|latest_alpine_version=\1|p" Containerfile >> "$GITHUB_OUTPUT"      
+          ALPINE_VERSION_PATCH=$(sed -nE "s|^ARG ALPINE_VERSION=(.*)$|\1|p" Containerfile)
+          ALPINE_VERSION_MINOR=$(sed -nE "s|^ARG ALPINE_VERSION=(.*)(\.\d+){1}$|\1|p" Containerfile)
+          ALPINE_VERSION_MAJOR=$(sed -nE "s|^ARG ALPINE_VERSION=(.*)(\.\d+){2}$|\1|p" Containerfile)
+          echo "ALPINE_VERSION_PATCH=${ALPINE_VERSION_PATCH}" >> $GITHUB_OUTPUT
+          echo "ALPINE_VERSION_MINOR=${ALPINE_VERSION_MINOR}" >> $GITHUB_OUTPUT
+          echo "ALPINE_VERSION_MAJOR=${ALPINE_VERSION_MAJOR}" >> $GITHUB_OUTPUT
 
       - id: publish-package
         name: Publish package
@@ -38,6 +43,6 @@ jobs:
           registry_username: ${{ secrets.REGISTRY_USERNAME || github.actor }}
           registry_password: ${{ secrets.REGISTRY_PASSWORD || github.token }}
           tags: |
-            alpine${{ join(take(split(steps.get-latest-alpine-version.outputs.latest_alpine_version, '.'), 1), '.') }}
-            alpine${{ join(take(split(steps.get-latest-alpine-version.outputs.latest_alpine_version, '.'), 2), '.') }}
-            alpine${{ steps.get-latest-alpine-version.outputs.latest_alpine_version }}
+            alpine${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_PATCH }}
+            alpine${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_MINOR }}
+            alpine${{ steps.get-alpine-versions.outputs.ALPINE_VERSION_MAJOR }}
