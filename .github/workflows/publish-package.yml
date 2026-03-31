@@ -15,6 +15,13 @@ jobs:
     name: Publish package
     runs-on: ubuntu-latest
     steps:
+      - id: checkout-code
+        name: Checkout code
+        uses: actions/checkout@v6.0.2
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+
       - id: get-latest-alpine-version
         name: Get latest Fedora version
         run: |
