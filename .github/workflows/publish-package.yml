@@ -28,9 +28,9 @@ jobs:
           ALPINE_VERSION_PATCH=$(sed -nE "s|^ARG ALPINE_VERSION=(.*)$|\1|p" Containerfile)
           ALPINE_VERSION_MINOR=$(sed -nE "s|^ARG ALPINE_VERSION=(.*)(\.\d+){1}$|\1|p" Containerfile)
           ALPINE_VERSION_MAJOR=$(sed -nE "s|^ARG ALPINE_VERSION=(.*)(\.\d+){2}$|\1|p" Containerfile)
-          echo "ALPINE_VERSION_PATCH=${ALPINE_VERSION_PATCH}" >> $GITHUB_OUTPUT
-          echo "ALPINE_VERSION_MINOR=${ALPINE_VERSION_MINOR}" >> $GITHUB_OUTPUT
-          echo "ALPINE_VERSION_MAJOR=${ALPINE_VERSION_MAJOR}" >> $GITHUB_OUTPUT
+          echo "ALPINE_VERSION_PATCH=${ALPINE_VERSION_PATCH}\n" >> $GITHUB_OUTPUT
+          echo "ALPINE_VERSION_MINOR=${ALPINE_VERSION_MINOR}\n" >> $GITHUB_OUTPUT
+          echo "ALPINE_VERSION_MAJOR=${ALPINE_VERSION_MAJOR}\n" >> $GITHUB_OUTPUT
 
       - id: publish-package
         name: Publish package
