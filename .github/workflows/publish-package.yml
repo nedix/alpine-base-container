@@ -38,4 +38,6 @@ jobs:
           registry_username: ${{ secrets.REGISTRY_USERNAME || github.actor }}
           registry_password: ${{ secrets.REGISTRY_PASSWORD || github.token }}
           tags: |
+            alpine${{ join(take(split(steps.get-latest-alpine-version.outputs.latest_alpine_version, '.'), 1), '.') }}
+            alpine${{ join(take(split(steps.get-latest-alpine-version.outputs.latest_alpine_version, '.'), 2), '.') }}
             alpine${{ steps.get-latest-alpine-version.outputs.latest_alpine_version }}
