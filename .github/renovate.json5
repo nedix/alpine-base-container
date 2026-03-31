@@ -1,0 +1,28 @@
+{
+    extends: [
+        "https://raw.githubusercontent.com/nedix/actions/main/renovate.json5",
+    ],
+    customManagers: [
+        {
+            depNameTemplate: "Alpine",
+            fileMatch: ["^Containerfile$"],
+            matchStrings: ["ARG ALPINE_VERSION=(?<currentValue>.*?)\\n"],
+            datasourceTemplate: "docker",
+            packageNameTemplate: "alpine",
+        },
+        {
+            depNameTemplate: "YQ",
+            fileMatch: ["^Containerfile$"],
+            matchStrings: ["ARG YQ_VERSION=(?<currentValue>.*?)\\n"],
+            datasourceTemplate: "github-releases",
+            packageNameTemplate: "mikefarah/yq",
+        },
+    ],
+    packageRules: [
+        {
+            description: "Custom versioning for YQ",
+            matchPackageNames: ["mikefarah/yq"],
+            extractVersion: "^v(?<version>.*)$",
+        },
+    ],
+}

@@ -1,0 +1,34 @@
+name: Publish package
+
+on:
+  push:
+    tags: ['*']
+
+permissions:
+  attestations: write
+  id-token: write
+  packages: write
+  security-events: read
+
+jobs:
+  publish-package:
+    name: Publish package
+    runs-on: ubuntu-latest
+    steps:
+      - id: get-latest-alpine-version
+        name: Get latest Fedora version
+        run: |
+          echo "latest_alpine_version=" && sed -nE "s|^ARG ALPINE_VERSION=(.*)$|latest_alpine_version=\1|p" Containerfile >> "$GITHUB_OUTPUT"      
+
+      - id: publish-package
+        name: Publish package
+        uses: nedix/actions/publish-package@main
+        with:
+          enable_cache: 'true'
+          platforms: linux/amd64,linux/arm64/v8
+          registry: ${{ secrets.REGISTRY_DOMAIN || 'ghcr.io' }}
+          registry_path: ${{ secrets.REGISTRY_PATH || github.repository }}
+          registry_username: ${{ secrets.REGISTRY_USERNAME || github.actor }}
+          registry_password: ${{ secrets.REGISTRY_PASSWORD || github.token }}
+          tags: |
+            alpine${{ steps.get-latest-alpine-version.outputs.latest_alpine_version }}

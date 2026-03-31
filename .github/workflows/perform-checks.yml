@@ -1,0 +1,18 @@
+name: Perform checks
+
+on:
+  merge_group:
+  pull_request_target:
+    branches: ['main']
+    types: ['opened', 'reopened', 'synchronize']
+
+jobs:
+  perform-checks:
+    name: Perform checks
+    runs-on: ubuntu-latest
+    steps:
+      - id: perform-checks
+        name: Perform checks
+        uses: nedix/actions/perform-checks@main
+        with:
+          command: ./tests/index.sh
