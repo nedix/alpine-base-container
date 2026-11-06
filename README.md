@@ -3,7 +3,7 @@
 ## Getting started
 
 ```dockerfile
-ARG ALPINE_VERSION=3.24.3
+ARG ALPINE_VERSION=3.24.4
 
 FROM ghcr.io/nedix/alpine-base-container:${ALPINE_VERSION}
 
